@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container" style="display: flex; justify-content: center; align-items: center;">
+        <!-- Button trigger modal -->
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formpesan">
+    Cart
+     </button>
+     <div class="container">  
+  <!-- Modal -->
+  <div class="modal fade" id="formpesan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Form Pemesanan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Nama Lengkap :</label>
+                <input type="text" class="form-control" id="namaLengkap" placeholder="Nama Lengkap">
+              </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">No Telepon :</label>
+                <input type="text" class="form-control" id="noTelepon" placeholder="No Telepon">
+              </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Alamat :</label>
+                <input type="text" class="form-control" id="alamat" placeholder="Alamat">
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Menu :</label>
+                <textarea class="form-control" id="menu" rows="3" placeholder="Menu yang Dipesan"></textarea>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Kirim Pesanan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+     </div>
+    </div>
+    <script>
+        document.getElementById("formpesanLink").addEventListener("click", function() {
+        var modal = new bootstrap.Modal(document.getElementById('formpesan'));
+        modal.show();
+            });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mengambil elemen-elemen form
+            var namaLengkapInput = document.getElementById('namaLengkap');
+            var noTeleponInput = document.getElementById('noTelepon');
+            var alamatInput = document.getElementById('alamat');
+            var menuInput = document.getElementById('menu');
+        
+            // Mengambil elemen button Kirim Pesanan
+            var kirimButton = document.querySelector('#formpesan .btn-primary');
+        
+            // Menambahkan event listener pada button Kirim Pesanan
+            kirimButton.addEventListener('click', function () {
+                // Mengambil nilai input
+                var namaLengkap = namaLengkapInput.value;
+                var noTelepon = noTeleponInput.value;
+                var alamat = alamatInput.value;
+                var menu = menuInput.value;
+        
+                // Memeriksa apakah semua input telah diisi
+                if (namaLengkap && noTelepon && alamat && menu) {
+                    // Menggabungkan nilai dengan karakter baris baru
+                    var formattedData = 'Nama Lengkap: ' + namaLengkap + '\n'
+                                      + 'No Telepon: ' + noTelepon + '\n'
+                                      + 'Alamat: ' + alamat + '\n'
+                                      + 'Menu: ' + menu;
+        
+                    // Di sini Anda dapat menambahkan logika pengiriman ke WhatsApp menggunakan API WhatsApp
+                    // Contoh:
+                    var whatsappLink = 'https://api.whatsapp.com/send?phone=6281236715460&text=' + encodeURIComponent('Data Pesanan:\n' + formattedData);
+                    window.open(whatsappLink);
+                } else {
+                    Swal.fire({
+                    icon: "warning",
+                    text: "Lengkapi Formulir Sebelum Melanjutkan",
+                    });
+                }
+            });
+        });
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+
+
