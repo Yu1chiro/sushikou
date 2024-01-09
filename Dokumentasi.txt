@@ -1,0 +1,23 @@
+Langkah-langkah menjalankan program web :
+
+1. download dan ekstrak file zip sushikou di link drive selanjutnya taruh di folder sesuai keinginan. 
+2. Dalam menjalankan program web ini install terlebih dahulu aplikasi Visual studio code, link download : https://code.visualstudio.com/download
+3. next semua permission setelah berhasil terinstall, buka visual studio code dan klik file pada pojok kiri atas dan open folder
+4. Cari folder yg sudah di download bernama sushikou dan select folder, jika tampil notifikasi di visual studio code click trust author
+
+Terdapat beberapa aturan dalam memodifikasi baik itu teks dan mengganti image 
+berikut langkah-langkah yang perlu diperhatikan :
+
+1. pada file index.html, cari element <h1> untuk mengubah heading/judul, jika ingin mengganti judul
+lakukan dengan cara berikut <h1> your title </h1> pada indeks.html saya sudah memberikan komentar dengan highlight hijau
+<--!---> itu juga berlaku untuk mengubah paragraf atau teks yaitu elemen <p> your teks </p>.
+
+2. Selanjutnya jika ingin mengubah gambar cari elemen dengan nama <img src=""> untuk mengganti image pastikan image sudah berada pada folder images,
+berikut adalah cara merubahnya, jika image yg berada pada folder images adalah yourimage, maka lakukan pemanggilan pada <img src=""> dengan cara,
+<img src="images/yourimage.jpg> dalam penamaan image, image tidak boleh berisi spasi, untuk format image yg bisa berjalan adalah jpg, jpeg, png, dan webp.
+
+3. Jika sudah melakukan semua perubahan lakukan CTRL + S pada halaman index.html
+
+
+
+1/09/2024
