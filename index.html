@@ -344,66 +344,74 @@
                   </p>
                   <div class="options">
                     <h6>
-                      your price Rp.
+                      Rp. 30.0000
                     </h6>
                     <!-- Script untuk menampilkan modal -->
                     <script>
-                      document.addEventListener('DOMContentLoaded', function () {
-                          // Mengambil elemen link untuk membuka modal
-                          var openModalLink = document.querySelector('a[data-bs-toggle="modal"][data-bs-target="#formpesan"]');
-                      
-                          // Menambahkan event listener pada link untuk membuka modal
-                          openModalLink.addEventListener('click', function () {
-                              // Menampilkan modal
-                              var modal = new bootstrap.Modal(document.getElementById('formpesan'));
-                              modal.show();
-
-                              // Menangani penutupan modal untuk membersihkan kelas modal-open
-                              modal._element.addEventListener('hidden.bs.modal', function () {
-                                  // Menambahkan kelas modal-open kembali setelah delay
-                                  setTimeout(function () {
-                                      document.body.classList.add('modal-open');
-                                  }, 200);
-                      
-                                  // Refresh halaman dan fokus ke elemen dengan id="menu"
-                                  setTimeout(function () {
-                                      location.reload();
-                                      document.getElementById('menu').focus();
-                                  }, 400);
-                              });
-                          });
-                      });
                       document.addEventListener('DOMContentLoaded', function () {
                           var namaLengkapInput = document.getElementById('namaLengkap');
                           var noTeleponInput = document.getElementById('noTelepon');
                           var alamatInput = document.getElementById('alamat');
                           var menuInput = document.getElementById('menu1');
                           var kirimButton = document.querySelector('#formpesan .btn-primary');
-                  
+                      
                           kirimButton.addEventListener('click', function () {
                               var namaLengkap = namaLengkapInput.value;
                               var noTelepon = noTeleponInput.value;
                               var alamat = alamatInput.value;
                               var menu1 = menuInput.value;
-                  
+                      
                               // Check if all form fields are filled
                               if (namaLengkap === '' || noTelepon === '' || alamat === '' || menu1 === '') {
-                                Swal.fire({
-                                icon: "warning",
-                                text: "Lengkapi Formulir Sebelum Melanjutkan",
-                                });
+                                  Swal.fire({
+                                      icon: "warning",
+                                      text: "Lengkapi Formulir Sebelum Melanjutkan",
+                                  });
                               } else {
-                                  var formattedData = 'Nama Lengkap: ' + namaLengkap + '\n'
+                                  // Construct the message
+                                  var additionalMessage = "Hallo admin, ada pesanan baru nih👋😇 :\n";
+                                  var formattedData = additionalMessage
+                                      + 'Nama Lengkap: ' + namaLengkap + '\n'
                                       + 'No Telepon: ' + noTelepon + '\n'
                                       + 'Alamat: ' + alamat + '\n'
                                       + 'Menu: ' + menu1;
-                  
-                                  var whatsappLink = 'https://api.whatsapp.com/send?phone=6287777299565&text=' + encodeURIComponent('Pesanan baru:\n' + formattedData);
-                                  window.open(whatsappLink);
+                      
+                                  // Send the message to Telegram
+                                  var telegramBotURL = 'https://api.telegram.org/bot6901570358:AAHJcBMb1IkLY3LzDtGd6zEq_P2NcCHIBf4/sendMessage';
+                                  var chatId = '-1001955994789'; // Update with your chat ID
+                                  var text = encodeURIComponent(formattedData);
+                                  var sendMessageURL = telegramBotURL + '?chat_id=' + chatId + '&text=' + text;
+                      
+                                  fetch(sendMessageURL)
+                                      .then(response => response.json())
+                                      .then(data => {
+                                          // Handle success response if needed
+                                          console.log(data);
+                                          // Optionally, you can display a success message to the user
+                                          Swal.fire({
+                                              icon: "success",
+                                              text: "Pesanan berhasil terkirim!",
+                                          }).then(() => {
+                                              // Close the modal
+                                              var modal = bootstrap.Modal.getInstance(document.getElementById('formpesan'));
+                                              modal.hide();
+                                          });
+                                      })
+                                      .catch(error => {
+                                          // Handle error if needed
+                                          console.error('Error:', error);
+                                          // Optionally, you can display an error message to the user
+                                          Swal.fire({
+                                              icon: "error",
+                                              text: "Gagal mengirim pesanan. Silakan coba lagi nanti.",
+                                          });
+                                      });
                               }
                           });
                       });
-                      </script>     
+                      </script>
+                      
+                      
                       <div class="modal fade" id="formpesan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
@@ -510,7 +518,7 @@
                   </p>
                   <div class="options">
                     <h6>
-                      your price Rp.
+                      Rp. 30.000
                     </h6>
                     <a type="button" data-bs-toggle="modal" data-bs-target="#formpesan">
                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
@@ -586,7 +594,7 @@
                   </p>
                   <div class="options">
                     <h6>
-                      your price Rp.
+                      Rp. 25.000
                     </h6>
                     <a type="button" data-bs-toggle="modal" data-bs-target="#formpesan">
                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
@@ -662,7 +670,7 @@
                   </p>
                   <div class="options">
                     <h6>
-                      your price Rp.
+                      your price Rp. 25.000
                     </h6>
                     <a type="button" data-bs-toggle="modal" data-bs-target="#formpesan">
                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
