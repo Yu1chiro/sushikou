@@ -369,12 +369,12 @@
                                   });
                               } else {
                                   // Construct the message
-                                  var additionalMessage = "Hallo admin, ada pesanan baru nih👋😇 :\n";
-                                  var formattedData = additionalMessage
-                                      + 'Nama Lengkap: ' + namaLengkap + '\n'
-                                      + 'No Telepon: ' + noTelepon + '\n'
-                                      + 'Alamat: ' + alamat + '\n'
-                                      + 'Menu: ' + menu1;
+                              var additionalMessage = "Hallo admin, ada pesanan baru nih👋😇 :\n";
+                              var formattedData = additionalMessage
+                                  + 'Nama Lengkap: ' + namaLengkap + '\n'
+                                  + 'No Telepon: ' + noTelepon + '\n'
+                                  + 'Alamat: ' + alamat + '\n'
+                                  + 'Menu: ' + menu1;
                       
                                   // Send the message to Telegram
                                   var telegramBotURL = 'https://api.telegram.org/bot6901570358:AAHJcBMb1IkLY3LzDtGd6zEq_P2NcCHIBf4/sendMessage';
@@ -391,10 +391,6 @@
                                           Swal.fire({
                                               icon: "success",
                                               text: "Pesanan berhasil terkirim!",
-                                          }).then(() => {
-                                              // Close the modal
-                                              var modal = bootstrap.Modal.getInstance(document.getElementById('formpesan'));
-                                              modal.hide();
                                           });
                                       })
                                       .catch(error => {
