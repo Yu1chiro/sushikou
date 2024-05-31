@@ -71,6 +71,38 @@
         </nav>
       </div>
     </header>
+    <div class="modal fade" id="formpesan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="text-dark font-weight-bold" id="exampleModalLabel">Form Pemesanan</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">Nama Lengkap :</label>
+                  <input type="text" class="form-control" id="namaLengkap" placeholder="Nama Lengkap">
+                </div>
+              <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">No Telepon :</label>
+                  <input type="text" class="form-control" id="noTelepon" placeholder="No Telepon">
+                </div>
+              <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">Alamat :</label>
+                  <input type="text" class="form-control" id="alamat" placeholder="Alamat">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label">Menu :</label>
+                  <textarea class="form-control" id="menu1" rows="3" placeholder="Menu yang Dipesan"></textarea>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Kirim Pesanan</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- end header section -->
     <!-- slider section -->
     <section class="slider_section ">
@@ -326,6 +358,13 @@
         <li data-filter=".karage">Karage</li>
         <li data-filter=".ramen">Ramen</li>
       </ul>
+      <div class="cart">
+        <h5>Keranjang Belanja</h5>
+        <ul class="cart-items">
+        </ul>
+        <p class="total-price fw-bold text-dark"></p>
+        <button class="btn btn-primary btn-block">Checkout</button>
+      </div>
 
       <div class="filters-content">
         <div class="row grid" data-aos="fade-up">
@@ -342,106 +381,13 @@
                   <p>
                     Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
                   </p>
+                  
                   <div class="options">
                     <h6>
                       Rp. 30.0000
                     </h6>
-                    <!-- Script untuk menampilkan modal -->
-                    <script>
-                      document.addEventListener('DOMContentLoaded', function () {
-                          var namaLengkapInput = document.getElementById('namaLengkap');
-                          var noTeleponInput = document.getElementById('noTelepon');
-                          var alamatInput = document.getElementById('alamat');
-                          var menuInput = document.getElementById('menu1');
-                          var kirimButton = document.querySelector('#formpesan .btn-primary');
-                      
-                          kirimButton.addEventListener('click', function () {
-                              var namaLengkap = namaLengkapInput.value;
-                              var noTelepon = noTeleponInput.value;
-                              var alamat = alamatInput.value;
-                              var menu1 = menuInput.value;
-                      
-                              // Check if all form fields are filled
-                              if (namaLengkap === '' || noTelepon === '' || alamat === '' || menu1 === '') {
-                                  Swal.fire({
-                                      icon: "warning",
-                                      text: "Lengkapi Formulir Sebelum Melanjutkan",
-                                  });
-                              } else {
-                                  // Construct the message
-                              var additionalMessage = "Hallo admin, ada pesanan baru nih👋😇 :\n";
-                              var formattedData = additionalMessage
-                                  + 'Nama Lengkap: ' + namaLengkap + '\n'
-                                  + 'No Telepon: ' + noTelepon + '\n'
-                                  + 'Alamat: ' + alamat + '\n'
-                                  + 'Menu: ' + menu1;
-                      
-                                  // Send the message to Telegram
-                                  var telegramBotURL = 'https://api.telegram.org/bot6901570358:AAHJcBMb1IkLY3LzDtGd6zEq_P2NcCHIBf4/sendMessage';
-                                  var chatId = '-1001955994789'; // Update with your chat ID
-                                  var text = encodeURIComponent(formattedData);
-                                  var sendMessageURL = telegramBotURL + '?chat_id=' + chatId + '&text=' + text;
-                      
-                                  fetch(sendMessageURL)
-                                      .then(response => response.json())
-                                      .then(data => {
-                                          // Handle success response if needed
-                                          console.log(data);
-                                          // Optionally, you can display a success message to the user
-                                          Swal.fire({
-                                              icon: "success",
-                                              text: "Pesanan berhasil terkirim!",
-                                          });
-                                      })
-                                      .catch(error => {
-                                          // Handle error if needed
-                                          console.error('Error:', error);
-                                          // Optionally, you can display an error message to the user
-                                          Swal.fire({
-                                              icon: "error",
-                                              text: "Gagal mengirim pesanan. Silakan coba lagi nanti.",
-                                          });
-                                      });
-                              }
-                          });
-                      });
-                      </script>
-                      
-                      
-                      <div class="modal fade" id="formpesan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h1 class="text-dark font-weight-bold" id="exampleModalLabel">Form Pemesanan</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Nama Lengkap :</label>
-                                    <input type="text" class="form-control" id="namaLengkap" placeholder="Nama Lengkap">
-                                  </div>
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">No Telepon :</label>
-                                    <input type="text" class="form-control" id="noTelepon" placeholder="No Telepon">
-                                  </div>
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Alamat :</label>
-                                    <input type="text" class="form-control" id="alamat" placeholder="Alamat">
-                                  </div>
-                                  <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Menu :</label>
-                                    <textarea class="form-control" id="menu1" rows="3" placeholder="Menu yang Dipesan"></textarea>
-                                  </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary">Kirim Pesanan</button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#formpesan">
-                      <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                      <a type="button" class="add-to-cart" data-name="Giant 30k" data-img="images/bg-sushi.jpg" data-price="30.000">
+                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                         <g>
                           <g>
                             <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -495,6 +441,7 @@
                       </svg>
                     </a>
                   </div>
+                   <!--  -->
                 </div>
               </div>
             </div>
@@ -516,7 +463,7 @@
                     <h6>
                       Rp. 30.000
                     </h6>
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#formpesan">
+                    <a type="button" class="add-to-cart" data-name="Chicken 30k" data-img="/images/chicken.jpg" data-price="30.000">
                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                         <g>
                           <g>
@@ -592,7 +539,7 @@
                     <h6>
                       Rp. 25.000
                     </h6>
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#formpesan">
+                    <a type="button" class="add-to-cart" data-name="Sushi 25k" data-img="/images/sushi cheeze.jpg" data-price="25.000">
                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                         <g>
                           <g>
@@ -1595,6 +1542,7 @@
   <!-- Google Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
   </script>
+  <script src="js/form.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

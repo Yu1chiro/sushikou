@@ -70,7 +70,26 @@ h2 {
           align-items: center;
   text-align: center;
 }
-
+.cart {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 15px;
+  display: none;
+  z-index:1000;
+}
+.cart-items {
+  list-style-type: none;
+  padding: 0;
+}
+.cart-items li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 a,
 a:hover,
 a:focus {
