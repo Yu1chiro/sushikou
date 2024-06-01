@@ -98,10 +98,10 @@ $(document).ready(function() {
 
         updateTotalPrice(); // Update total price display
 
-        $('.cart').show();
+        $('.cart, .cart-toggle').removeClass('hidden');
 
         // Tampilkan notifikasi kecil
-        $('.notification').text('Item ditambahkan ke keranjang!').fadeIn().delay(1000).fadeOut();
+        $('.alert-box').removeClass('hidden').fadeIn().delay(500).fadeOut();
     });
 
     $(document).on('click', '.remove-cart-item', function() {
@@ -115,7 +115,7 @@ $(document).ready(function() {
         updateTotalPrice();
 
         if ($('.cart-items li').length === 0) {
-            $('.cart').hide();
+            $('.cart, .cart-toggle').addClass('hidden');
         }
     });
 
@@ -142,6 +142,31 @@ $(document).ready(function() {
             var productPrice = parseInt(itemElement.find('.product-price').text());
             totalPrice -= productPrice; // Kurangi harga produk dari total
             updateTotalPrice();
+        }
+    });
+
+    $('.toggle-cart').click(function() {
+        $('.cart').toggle();
+    });
+
+    // Tutup keranjang saat klik di luar area keranjang
+    $(document).click(function(event) {
+        if (!$(event.target).closest('.cart, .toggle-cart, .add-to-cart').length) {
+            $('.cart').hide();
+        }
+    });
+
+    // Tampilkan toggle cart ketika scroll ke section food_section
+    $(window).scroll(function() {
+        var menuSection = $('#menu');
+        var menuOffset = menuSection.offset().top;
+        var menuHeight = menuSection.outerHeight();
+        var scrollPosition = $(window).scrollTop();
+
+        if (scrollPosition >= menuOffset && scrollPosition <= menuOffset + menuHeight) {
+            $('.cart-toggle').fadeIn();
+        } else {
+            $('.cart-toggle').fadeOut();
         }
     });
 });

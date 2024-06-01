@@ -1,0 +1,30 @@
+@media screen and (max-width: 640px) {
+    .nav-item {
+        margin:3px 0;
+    }
+    .container {
+        width:80%!important;
+       
+    }
+    .data-frame, iframe {
+       display:none!important;
+    }
+    .desc {
+        margin:1rem 1rem; 
+        letter-spacing:0.3;
+    }
+}
+.navbar-toggler:focus {
+    color:white!important;
+    border:2px solid black!important;
+
+}
+.data-frame, iframe {
+    width:85%;
+    height:80vh!important;
+    display:flex;
+    justify-items:center;
+    margin-left:6rem;
+    margin-bottom:2rem;
+}
+
