@@ -1,12 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
-// import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
-// import { getDatabase } from "firebase/database";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,10 +14,12 @@ const firebaseConfig = {
     appId: "1:424676586226:web:783773aac7aa3612e9566b",
     measurementId: "G-5V69JWPF4X"
 };
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
+
 let signinButton = document.getElementById("signin-button");
 let signupButton = document.getElementById("signup-button");
 
@@ -41,14 +38,15 @@ signupButton.addEventListener("click", (e) => {
         name: name,
         nohp: nohp,
         email: emailSignup,
-        password: passwordSignup
+        password: passwordSignup,
+        admin: true // Set admin flag to true
       })
         .then(() => {
           // Data saved successfully!
-          alert("user telah sukses dibuat");
+          alert("User telah sukses dibuat");
         })
         .catch((error) => {
-          //the write failed
+          // The write failed
           alert(error);
         });
     })
@@ -62,29 +60,39 @@ signupButton.addEventListener("click", (e) => {
 signinButton.addEventListener("click", (e) => {
   let emailSignin = document.getElementById("email_signin").value;
   let passwordSignin = document.getElementById("psw_signin").value;
+
   signInWithEmailAndPassword(auth, emailSignin, passwordSignin)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      let lgDate = new Date();
-      update(ref(database, "admin/" + user.uid), {
-        last_login: lgDate
-      })
-        .then(() => {
-          // Data saved successfully!
-          //   alert("user telah sukses login");
-          location.href = "https://sushikou.vercel.app/panel-admin.html";
-        })
-        .catch((error) => {
-          //the write failed
-          alert(error);
-        });
+
+      user.getIdTokenResult().then((idTokenResult) => {
+        // Check if user has admin claim
+        if (!!idTokenResult.claims.admin) {
+          // Update last login time
+          let lgDate = new Date();
+          update(ref(database, "admin/" + user.uid), {
+            last_login: lgDate
+          })
+          .then(() => {
+            // Data saved successfully
+            location.href = "https://sushikou.vercel.app/panel-admin.html";
+          })
+          .catch((error) => {
+            // The write failed
+            alert(error);
+          });
+        } else {
+          alert("Access Denied. Admins only.");
+        }
+      });
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       alert(errorMessage);
     });
+  
   signOut(auth)
     .then(() => {})
     .catch((error) => {});
