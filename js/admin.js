@@ -31,6 +31,7 @@ logoutButton.addEventListener("click", (e) => {
                 showConfirmButton: false
             }).then(() => {
                 // Redirect setelah timer selesai
+                // location.href = "http://127.0.0.1:5500/login-sign.html?#";
                 location.href = "https://sushikou.vercel.app/login-sign.html?#";
             });
         })
@@ -45,12 +46,14 @@ onAuthStateChanged(getAuth(app), (user) => {
         // User is signed in
         // Redirect to admin panel only if not already on admin panel
         if (!window.location.href.includes("panel-admin.html")) {
+            // location.href = "http://127.0.0.1:5500/panel.html";
             location.href = "https://sushikou.vercel.app/panel-admin.html";
         }
     } else {
         // User is signed out
         // Redirect to login page only if not already on login page
         if (!window.location.href.includes("login-sign.html?#")) {
+            // location.href = "http://127.0.0.1:5500/login-sign.html?#";
             location.href = "https://sushikou.vercel.app/login-sign.html?#";
         }
     }
@@ -69,6 +72,7 @@ const checkUserExists = () => {
             if (!userData) {
                 // User does not exist in database
                 // Redirect to login page
+                // location.href = "http://127.0.0.1:5500/login-sign.html?#";
                 location.href = "https://sushikou.vercel.app/login-sign.html?#";
             }
         });
@@ -77,3 +81,4 @@ const checkUserExists = () => {
 
 // Call checkUserExists when the page loads
 checkUserExists();
+// 

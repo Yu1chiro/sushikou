@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
     var namaLengkapInput = document.getElementById('namaLengkap');
     var noTeleponInput = document.getElementById('noTelepon');
@@ -170,5 +171,18 @@ $(document).ready(function() {
         }
     });
 });
+// cehckout keranjang
 
+var totalPrice = 0; // definisikan secara global
+
+
+
+
+
+
+
+
+ 
+
+    
 

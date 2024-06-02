@@ -77,6 +77,7 @@ signinButton.addEventListener("click", (e) => {
           })
           .then(() => {
             // Data saved successfully
+            // location.href = "http://127.0.0.1:5500/panel-admin.html";
             location.href = "https://sushikou.vercel.app/panel-admin.html";
           })
           .catch((error) => {
