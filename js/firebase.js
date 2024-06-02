@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
-import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
+import { getDatabase, set, ref, update, get, child } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -66,9 +66,10 @@ signinButton.addEventListener("click", (e) => {
       // Signed in
       const user = userCredential.user;
 
-      user.getIdTokenResult().then((idTokenResult) => {
-        // Check if user has admin claim
-        if (!!idTokenResult.claims.admin) {
+      // Check if user is admin from database
+      const dbRef = ref(database);
+      get(child(dbRef, `admin/${user.uid}`)).then((snapshot) => {
+        if (snapshot.exists() && snapshot.val().admin === true) {
           // Update last login time
           let lgDate = new Date();
           update(ref(database, "admin/" + user.uid), {
@@ -84,7 +85,11 @@ signinButton.addEventListener("click", (e) => {
           });
         } else {
           alert("Access Denied. Admins only.");
+          signOut(auth).catch((error) => console.log("Sign out error:", error));
         }
+      }).catch((error) => {
+        console.error(error);
+        alert("Failed to check admin status.");
       });
     })
     .catch((error) => {
@@ -92,8 +97,4 @@ signinButton.addEventListener("click", (e) => {
       const errorMessage = error.message;
       alert(errorMessage);
     });
-  
-  signOut(auth)
-    .then(() => {})
-    .catch((error) => {});
 });
