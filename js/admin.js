@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
-import { getDatabase, ref, onValue, update, get } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
+import { getDatabase, ref, onValue, update} from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBT6BEpZ_ot9VOr7fp8ZRUcxykmBuhHXWo",
@@ -31,35 +31,7 @@ function createTableRow(data, id) {
         </tr>
     `;
 }
-function exportToExcel(data) {
-    const worksheetData = data.map(order => ({
-        Name: order.name,
-        Pesan: order.pesan,
-        TotalPrice: order.totalPrice,
-        WhatsApp: order.whatsapp,
-        CartItems: order.cartItems.map(item => `${item.productName} (${item.quantity})`).join(', '),
-        PaymentStatus: order.Paymentstatus
-    }));
 
-    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Orders");
-    XLSX.writeFile(workbook, "Data-Order.xlsx");
-}
-
-// Add event listener to the "Extract to excel" button
-document.querySelector('.btn-ex').addEventListener('click', () => {
-    get(ordersRef).then((snapshot) => {
-        const orders = [];
-        snapshot.forEach((childSnapshot) => {
-            orders.push(childSnapshot.val());
-        });
-
-        exportToExcel(orders);
-    }).catch(error => {
-        console.error('Error fetching data:', error);
-    });
-});
 
 // Get reference to the orders in the database
 const ordersRef = ref(database, 'customer-order');
