@@ -18,6 +18,11 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 document.querySelector('.submit-data').addEventListener('click', function() {
+    const button = this;
+    const originalText = button.innerHTML;
+    button.classList.add('loading');
+    button.innerHTML = ''; // Menghapus teks tombol
+
     var name = document.querySelector('input[name="name-customer"]').value;
     var whatsapp = document.querySelector('input[name="whatsapp"]').value;
     var pesan = document.querySelector('input[name="pesan"]').value;
@@ -43,19 +48,38 @@ document.querySelector('.submit-data').addEventListener('click', function() {
     });
 
     // Kirim data ke Firebase
-    var newDataRef = push(ref(database, 'checkouts'));
+    var newDataRef = push(ref(database, 'customer-order'));
     set(newDataRef, {
         name: name,
         whatsapp: whatsapp,
         pesan: pesan,
         cartItems: cartItems,
-        totalPrice: totalPrice
-    });
+        totalPrice: totalPrice,
+        Paymentstatus: 'Pending'
+    }).then(() => {
+        // Reset formulir dan keranjang setelah checkout
+        document.querySelector('input[name="name-customer"]').value = '';
+        document.querySelector('input[name="whatsapp"]').value = '';
+        document.querySelector('input[name="pesan"]').value = '';
+        document.querySelector('.cart-items').innerHTML = '';
+        document.querySelector('.total-price').textContent = 'Total: Rp. 0';
 
-    // Reset formulir dan keranjang setelah checkout
-    document.querySelector('input[name="name-customer"]').value = '';
-    document.querySelector('input[name="whatsapp"]').value = '';
-    document.querySelector('input[name="pesan"]').value = '';
-    document.querySelector('.cart-items').innerHTML = '';
-    document.querySelector('.total-price').textContent = 'Total: Rp. 0';
+        // Hapus animasi loading dan tampilkan alert sukses
+        button.classList.remove('loading');
+        button.innerHTML = originalText; // Kembalikan teks tombol
+        Swal.fire({
+            icon: 'success',
+            title: 'Thankyou!',
+            text: 'Terimakasih telah melakukan pemesanan😇 kami akan mengirimkan notifikasi ke whatsapp'
+        });
+    }).catch((error) => {
+        // Hapus animasi loading dan tampilkan alert error
+        button.classList.remove('loading');
+        button.innerHTML = originalText; // Kembalikan teks tombol
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: 'Terjadi kesalahan saat mengirim data: ' + error.message
+        });
+    });
 });
