@@ -17,6 +17,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+function updateCheckoutButton() {
+    const cartItems = document.querySelectorAll('.cart-items .cart-item');
+    const checkoutButton = document.querySelector('.submit-data');
+    if (cartItems.length > 0) {
+        checkoutButton.style.display = 'block';
+    } else {
+        checkoutButton.style.display = 'none';
+    }
+}
+updateCheckoutButton();
+
+// Inisialisasi status tombol checkout saat halaman dimuat
 document.querySelector('.submit-data').addEventListener('click', function() {
     const button = this;
     const originalText = button.innerHTML;
@@ -26,6 +38,17 @@ document.querySelector('.submit-data').addEventListener('click', function() {
     var name = document.querySelector('input[name="name-customer"]').value;
     var whatsapp = document.querySelector('input[name="whatsapp"]').value;
     var pesan = document.querySelector('input[name="pesan"]').value;
+
+    if (name === '' || whatsapp === '') {
+        button.classList.remove('loading');
+        button.innerHTML = originalText;
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: 'Nama dan Whatsapp wajib diisi.'
+        });
+        return;
+    }
 
     var cartItems = [];
     document.querySelectorAll('.cart-items .cart-item').forEach(function(item) {
@@ -72,6 +95,8 @@ document.querySelector('.submit-data').addEventListener('click', function() {
             title: 'Thankyou!',
             text: 'Terimakasih telah melakukan pemesanan😇 kami akan mengirimkan notifikasi ke whatsapp'
         });
+        updateCheckoutButton();
+
     }).catch((error) => {
         // Hapus animasi loading dan tampilkan alert error
         button.classList.remove('loading');

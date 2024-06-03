@@ -43,7 +43,7 @@ signupButton.addEventListener("click", (e) => {
       })
         .then(() => {
           // Data saved successfully!
-          alert("User telah sukses dibuat");
+          alert("Admin telah sukses dibuat");
         })
         .catch((error) => {
           // The write failed
@@ -76,9 +76,14 @@ signinButton.addEventListener("click", (e) => {
             last_login: lgDate
           })
           .then(() => {
-            // Data saved successfully
-            // location.href = "http://127.0.0.1:5500/panel-admin.html";
-            location.href = "https://sushikou.vercel.app/panel-admin.html";
+            Swal.fire({
+              icon: 'success',
+              title: 'Welcome Back Admin👋',
+            }).then(() => {
+              // Redirect after the alert is closed
+              // location.href = "http://127.0.0.1:5500/panel-admin.html";
+              location.href = "https://sushikou.vercel.app/panel-admin.html";
+            });
           })
           .catch((error) => {
             // The write failed
@@ -96,6 +101,10 @@ signinButton.addEventListener("click", (e) => {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      alert(errorMessage);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Oops! Email & Password Salah'
+      });
     });
 });

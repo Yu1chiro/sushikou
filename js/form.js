@@ -8,6 +8,16 @@ $(document).ready(function() {
         var formattedTotalPrice = totalPrice.toLocaleString('id-ID'); // Mengubah total harga ke format ribuan
         $('.total-price').text('Total: Rp. ' + formattedTotalPrice);
     }
+    function updateCheckoutButton() {
+        const cartItems = document.querySelectorAll('.cart-items .cart-item');
+        const checkoutButton = document.querySelector('.submit-data');
+        if (cartItems.length > 0) {
+            checkoutButton.style.display = 'block';
+        } else {
+            checkoutButton.style.display = 'none';
+        }
+    }
+    updateCheckoutButton();
 
     $('.add-to-cart').click(function() {
         var productName = $(this).data('name');
@@ -42,6 +52,8 @@ $(document).ready(function() {
         }
 
         updateTotalPrice(); // Update total price display
+        updateCheckoutButton();
+
 
         $('.cart, .cart-toggle').removeClass('hidden');
 
