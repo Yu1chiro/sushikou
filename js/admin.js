@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js";
-import { getDatabase, ref, onValue, update, get} from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
+import { getDatabase, ref, onValue, update, get, remove} from "https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js";
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyBT6BEpZ_ot9VOr7fp8ZRUcxykmBuhHXWo",
@@ -28,6 +28,7 @@ function createTableRow(data, id) {
             <td class="text-center">${data.cartItems.map(item => `${item.productName} (${item.quantity})`).join(', ')}</td>
             <td class="payment-status fw-bold text-center">${data.Paymentstatus}</td>
             <td class="text-center"><button type="button" class="btn-update btn btn-sm btn-success">Update ✅</button></td>
+            <td class="text-center"><button type="button" class="btn-delete btn btn-sm btn-danger">Delete ❌</button></td>
         </tr>
     `;
 }
@@ -45,7 +46,11 @@ onValue(ordersRef, (snapshot) => {
         const order = orders[id];
         tableBody.innerHTML += createTableRow(order, id);
     }
-
+// Attach click event listeners to the delete buttons
+const deleteButtons = document.querySelectorAll('.btn-delete');
+deleteButtons.forEach(button => {
+    button.addEventListener('click', handleDeleteButtonClick);
+});
     // Attach click event listeners to the update buttons
     const updateButtons = document.querySelectorAll('.btn-update');
     updateButtons.forEach(button => {
@@ -81,7 +86,22 @@ document.querySelector('.btn-ex').addEventListener('click', () => {
         console.error('Error fetching data:', error);
     });
 });
+// Function to handle delete button click
+function handleDeleteButtonClick(event) {
+    const row = event.target.closest('tr');
+    const orderId = row.getAttribute('data-id');
 
+    // Delete the order from the database
+    const orderRef = ref(database, `customer-order/${orderId}`);
+    remove(orderRef)
+        .then(() => {
+            // Remove the row from the table
+            row.remove();
+        })
+        .catch(error => {
+            console.error('Error deleting order:', error);
+        });
+}
 // Function to handle update button click
 function handleUpdateButtonClick(event) {
     const style = document.createElement('style');
@@ -125,7 +145,7 @@ logoutButton.addEventListener("click", (e) => {
             }).then(() => {
                 // Redirect setelah timer selesai
                 // location.href = "http://127.0.0.1:5500/login-sign.html?#";
-                location.href = "https://sushikou.vercel.app/login-sign.html?#";
+                location.href = "https://sushikou.vercel.app/Login.html?#";
             });
         })
         .catch((error) => {
@@ -138,16 +158,16 @@ onAuthStateChanged(getAuth(app), (user) => {
     if (user) {
         // User is signed in
         // Redirect to admin panel only if not already on admin panel
-        if (!window.location.href.includes("panel-admin.html")) {
+        if (!window.location.href.includes("Sushikou-Admin.html")) {
             // location.href = "http://127.0.0.1:5500/panel.html";
-            location.href = "https://sushikou.vercel.app/panel-admin.html";
+            location.href = "https://sushikou.vercel.app/Sushikou-Admin.html";
         }
     } else {
         // User is signed out
         // Redirect to login page only if not already on login page
-        if (!window.location.href.includes("login-sign.html?#")) {
-            // location.href = "http://127.0.0.1:5500/login-sign.html?#";
-            location.href = "https://sushikou.vercel.app/login-sign.html?#";
+        if (!window.location.href.includes("Login.html?#")) {
+            location.href = "https://sushikou.vercel.app/Login.html";
+
         }
     }
 });
@@ -165,8 +185,8 @@ const checkUserExists = () => {
             if (!userData) {
                 // User does not exist in database
                 // Redirect to login page
-                // location.href = "http://127.0.0.1:5500/login-sign.html?#";
-                location.href = "https://sushikou.vercel.app/login-sign.html?#";
+                location.href = "https://sushikou.vercel.app/Login.html";
+
             }
         });
     }

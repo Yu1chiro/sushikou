@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.2/firebase-storage.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <!-- <button id="logout-button">Logout</button> -->
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-primary">
+        <div class="container-fluid">
+          <img src="images/logo.png" alt="" class="rounded-circle" height="50" width="50">
+          <a class="navbar-brand text-white fw-bold ms-3" href="">Admin Sushikou</a>
+          <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link text-white fw-bold hiddn" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Upload New Product</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white fw-bold" href="index.html#menu">Check Menu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white fw-bold" id="logout-button" href="#">Log Out</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <h1 class="fw-bold text-dark text-center py-1">Selamat Datang Admin👋</h1>
+    <p class="desc text-dark text-center">Silahkan update pesanan dan menu baru jika diperlukan😇✨👋
+    </p>
+    <div class="container hidden py-3">
+        <a href="#"  class="btn btn-sm btn-success fw-bold d-flex justify-content-center"  style="margin: 5px 0;">Extract Table to Excel ✅</a>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-success fw-bold d-flex justify-content-center" style="margin: 5px 0;">Upload Menu baru 📝</a>
+    </div>
+    <div class="container order-table py-2" style="background-color: #3e4451;">
+        <h2 class="mb-2 text-center text-white">Customer Orders</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">Nama Customer</th>
+                    <th class="text-center">Pesan</th>
+                    <th class="text-center">Total Harga</th>
+                    <th class="text-center">Whatsapp</th>
+                    <th class="text-center">Menu Item</th>
+                    <th class="text-center">Payment Status</th>
+                    <th class="text-center">Update</th>
+                    <th class="text-center">Delete</th>
+                </tr>
+                <button type="button" class="btn-ex btn btn-success fw-bold">Extract to excel</button>
+            </thead>
+            <tbody id="orders-table-body">
+                <!-- Data will be inserted here by JavaScript -->
+                
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="container w-50 h-50 bg-dark rounded py-3">
+       
+
+    </div>  -->
+<!-- modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="text-dark fw-bold py-1"> Upload Menu Baru 📝</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-dark">
+        <form class="container-sm" id="update-menu">
+            <div class="mb-3">
+              <label for="product-name" class="form-label text-white fw-bold">Name Product :</label>
+              <input type="text" class="form-control fw-bold" id="product-name">
+            </div>
+            <div class="mb-3">
+              <label for="product-price"  class="form-label text-white fw-bold">Product Price :</label>
+              <input type="text" placeholder="masukkan angka" class="form-control fw-bold" id="product-price">
+            </div>
+            <div class="mb-3">
+              <label for="category" class="form-label text-white fw-bold">Category :</label>
+              <input type="text" placeholder="Sushi, Karage, Ramen" class="form-control" id="category">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label text-white fw-bold">Description :</label>
+              <textarea class="form-control text-dark" id="product-desc" rows="3"></textarea>
+            </div>
+            <div class="input-group mb-3">
+              <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+            </div>
+            <button type="submit" class="btn btn-success fw-bold">Post Product</button>
+          </form>
+        </div>
+       
+    </div>
+  </div>
+</div>
+    
+    <script type="module" src="js/admin.js"></script>
+    <script type="module" src="js/Controller.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // can't inspect the element
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: "This code can't copied because code contains copyright",
+  });
+});
+
+var countInspectOpen = 0; // Mendefinisikan variabel untuk menghitung jumlah pembukaan Inspect Element
+
+document.addEventListener('keydown', function(event) {
+  if (
+      event.ctrlKey &&
+      event.shiftKey &&
+      (event.key === 'I' || event.key === 'i' || event.key === 'J' || event.key === 'j' || event.keyCode === 123)
+  ) {
+      event.preventDefault();
+  
+      countInspectOpen++; 
+
+      if (countInspectOpen >= 1000) { 
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: "This code can't be copied because it contains copyright.",
+          });
+          countInspectOpen = 0; // Reset jumlah pembukaan Inspect Element setelah pesan error ditampilkan
+      }
+  }
+});
+
+  </script>
+</body>
+</html>

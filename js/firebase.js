@@ -81,8 +81,7 @@ signinButton.addEventListener("click", (e) => {
               title: 'Welcome Back Admin👋',
             }).then(() => {
               // Redirect after the alert is closed
-              // location.href = "http://127.0.0.1:5500/panel-admin.html";
-              location.href = "https://sushikou.vercel.app/panel-admin.html";
+              location.href = "https://sushikou.vercel.app/Sushikou-Admin.html";
             });
           })
           .catch((error) => {

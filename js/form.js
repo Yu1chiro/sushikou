@@ -8,6 +8,7 @@ $(document).ready(function() {
         var formattedTotalPrice = totalPrice.toLocaleString('id-ID'); // Mengubah total harga ke format ribuan
         $('.total-price').text('Total: Rp. ' + formattedTotalPrice);
     }
+
     function updateCheckoutButton() {
         const cartItems = document.querySelectorAll('.cart-items .cart-item');
         const checkoutButton = document.querySelector('.submit-data');
@@ -19,7 +20,7 @@ $(document).ready(function() {
     }
     updateCheckoutButton();
 
-    $('.add-to-cart').click(function() {
+    $(document).on('click', '.add-to-cart', function() {
         var productName = $(this).data('name');
         var productImg = $(this).data('img');
         var productPrice = parseInt($(this).data('price').replace(/\./g, '')); // Menghapus titik ribuan dan mengonversi ke integer
@@ -54,7 +55,6 @@ $(document).ready(function() {
         updateTotalPrice(); // Update total price display
         updateCheckoutButton();
 
-
         $('.cart, .cart-toggle').removeClass('hidden');
 
         // Tampilkan notifikasi kecil
@@ -70,6 +70,7 @@ $(document).ready(function() {
         itemElement.remove();
 
         updateTotalPrice();
+        updateCheckoutButton();
 
         if ($('.cart-items li').length === 0) {
             $('.cart, .cart-toggle').addClass('hidden');
@@ -127,7 +128,7 @@ $(document).ready(function() {
         }
     });
 });
-// cehckout keranjang
+
 
 var totalPrice = 0; // definisikan secara global
 

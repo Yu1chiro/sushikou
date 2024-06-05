@@ -75,5 +75,40 @@
 
     <script type="module" src="js/firebase.js"></script>
     <script src="js/app.js"></script>
+    <script>
+      // can't inspect the element
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: "This code can't copied because code contains copyright",
+  });
+});
+
+var countInspectOpen = 0; // Mendefinisikan variabel untuk menghitung jumlah pembukaan Inspect Element
+
+document.addEventListener('keydown', function(event) {
+  if (
+      event.ctrlKey &&
+      event.shiftKey &&
+      (event.key === 'I' || event.key === 'i' || event.key === 'J' || event.key === 'j' || event.keyCode === 123)
+  ) {
+      event.preventDefault();
+  
+      countInspectOpen++; 
+
+      if (countInspectOpen >= 1000) { 
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: "This code can't be copied because it contains copyright.",
+          });
+          countInspectOpen = 0; // Reset jumlah pembukaan Inspect Element setelah pesan error ditampilkan
+      }
+  }
+});
+
+  </script>
   </body>
 </html>
