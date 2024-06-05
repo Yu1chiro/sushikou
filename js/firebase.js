@@ -94,7 +94,11 @@ signinButton.addEventListener("click", (e) => {
         }
       }).catch((error) => {
         console.error(error);
-        alert("Failed to check admin status.");
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed check admin status'
+        });
       });
     })
     .catch((error) => {

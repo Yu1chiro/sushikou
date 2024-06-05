@@ -166,7 +166,7 @@ onAuthStateChanged(getAuth(app), (user) => {
         // User is signed out
         // Redirect to login page only if not already on login page
         if (!window.location.href.includes("Login.html?#")) {
-            location.href = "https://sushikou.vercel.app/Login.html";
+            location.href = "https://sushikou.vercel.app/Login.html?#";
 
         }
     }
@@ -185,7 +185,7 @@ const checkUserExists = () => {
             if (!userData) {
                 // User does not exist in database
                 // Redirect to login page
-                location.href = "https://sushikou.vercel.app/Login.html";
+                location.href = "https://sushikou.vercel.app/Login.html?#";
 
             }
         });

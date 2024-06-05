@@ -96,7 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             form.style.display = 'none';
-            alert('You need to log in to access this page.');
+            Swal.fire({
+                icon: 'success',
+                title: 'Log Out Berhasil !',
+              });
         }
     });
 
