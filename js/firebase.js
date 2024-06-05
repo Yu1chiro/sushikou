@@ -70,23 +70,12 @@ signinButton.addEventListener("click", (e) => {
       const dbRef = ref(database);
       get(child(dbRef, `admin/${user.uid}`)).then((snapshot) => {
         if (snapshot.exists() && snapshot.val().admin === true) {
-          // Update last login time
-          let lgDate = new Date();
-          update(ref(database, "admin/" + user.uid), {
-            last_login: lgDate
-          })
-          .then(() => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Welcome Back Admin👋',
-            }).then(() => {
-              // Redirect after the alert is closed
-              location.href = "https://sushikou.vercel.app/Sushikou-Admin.html";
-            });
-          })
-          .catch((error) => {
-            // The write failed
-            alert(error);
+          Swal.fire({
+            icon: 'success',
+            title: 'Welcome Back Admin👋',
+          }).then(() => {
+            // Redirect after the alert is closed
+            location.href = "https://sushikou.vercel.app/Sushikou-Admin.html";
           });
         } else {
           alert("Access Denied. Admins only.");
@@ -97,7 +86,7 @@ signinButton.addEventListener("click", (e) => {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'Failed check admin status'
+          text: 'Failed to check admin status'
         });
       });
     })
@@ -111,3 +100,4 @@ signinButton.addEventListener("click", (e) => {
       });
     });
 });
+
